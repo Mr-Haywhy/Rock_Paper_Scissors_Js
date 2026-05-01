@@ -1,4 +1,11 @@
 // console.log("Hello, world!")
+const gameLog = document.getElementById("game-log");
+const startBtn = document.getElementById("start-btn");
+
+function printScore(message) {
+    gameLog.textContent += message + "\n";
+}
+
 
 function playGame() {
     
@@ -47,43 +54,46 @@ function playGame() {
 
         // Check for the winner and update the score box
         if (humanChoice === computerChoice) {
-            console.log(`Draw: You both chose "${humanChoice}"`);
+            printScore(`Draw: You both chose "${humanChoice}"`);
         } else if ((humanChoice === "rock" && computerChoice === "scissors") ||
             (humanChoice === "paper" && computerChoice === "rock") ||
             (humanChoice === "scissors" && computerChoice === "paper"))
         {
             humanScore++    // Add 1 to human score
-            console.log(`You Win! "${ humanChoice }" beats "${computerChoice}"`);
+            printScore(`You Win! "${ humanChoice }" beats "${computerChoice}"`);
         } else {
             computerScore++ // Add 1 to computer score
-            console.log(`You lose! "${computerChoice}" beats "${humanChoice}"`)
+            printScore(`You lose! "${computerChoice}" beats "${humanChoice}"`)
             }
     }
 
     
 
     for (let i = 0; i < 5; i++) {
-        console.log(`------------ Round ${i + 1} -----------`);
+        printScore(`\n------------ Round ${i + 1} -----------`);
         const userResp = getHumanChoice();
         const compResp = getComputerChoice();
         playRound(userResp, compResp);
 
         // Print Score
-        console.log(`Score -> Human: ${humanScore} || Computer: ${computerScore}`);
+        printScore(`Score -> Human: ${humanScore} || Computer: ${computerScore}`);
 
     }
 
 
     // Score board that declares the final winner
-    console.log(`\n \n \n|------ FINAL SCORE ------|\n|-------------------------| `)
+    printScore(`\n \n \n|------ FINAL SCORE ------|\n|----------------------------| `)
     if (humanScore > computerScore) {
-        console.log(`Congratulation! You won the game with ${humanScore} points.`);
+        printScore(`Congratulation! You won the game with ${humanScore} points.`);
     } else if (humanScore < computerScore) {
-        console.log(`Game over! The computer won the game with ${computerScore} points.`)
+        printScore(`Game over! The computer won the game with ${computerScore} points.`)
     } else {
-        console.log(`The entire game is a tie! ${humanScore} || ${computerScore}`)
+        printScore(`The entire game is a tie! ${humanScore} || ${computerScore}`)
     }
 
 }
 
-playGame()
+startBtn.addEventListener("click", () => {
+    printScore.textContent = "";
+    playGame()
+});
